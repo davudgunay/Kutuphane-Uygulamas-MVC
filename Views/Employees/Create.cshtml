@@ -1,0 +1,79 @@
+﻿@model LibraryMVC.Models.Employee
+
+@{
+	ViewData["Title"] = "Yeni Kayıt";
+}
+
+<script>
+
+	function GetDistricts(cityID) {
+		$("#Library_DistrictId").load("@Url.Action("CityDistricts","Districts")?cityId=" + cityID.toString(),
+		function () {
+                var districtId = $("#Library_DistrictId").val();
+                GetLibraries(districtId);
+            }
+		)
+	}
+
+	function GetLibraries(districtID) {
+		$("#LibraryId").load("@Url.Action("DistrictLibraries","Libraries")?districtId=" + districtID.toString())
+	}
+
+</script>
+
+<h1>Yeni Kayıt</h1>
+
+<h4>Çalışan</h4>
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="Id" class="control-label"></label>
+				<input asp-for="Id" class="form-control" />
+				<span asp-validation-for="Id" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Name" class="control-label"></label>
+				<input asp-for="Name" class="form-control" />
+				<span asp-validation-for="Name" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="BirthDate" class="control-label"></label>
+				<input asp-for="BirthDate" type="date" class="form-control" />
+				<span asp-validation-for="BirthDate" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Library.District.CityId" class="control-label"></label>
+				<select asp-for="Library.District.CityId" class="form-control" asp-items="ViewBag.CityId" onchange="GetDistricts(this.value)">
+				</select>
+				<span asp-validation-for="Library.District.CityId" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Library.DistrictId" class="control-label"></label>
+				<select asp-for="Library.DistrictId" class="form-control" asp-items="ViewBag.DistrictId" onchange="GetLibraries(this.value)">
+				</select>
+				<span asp-validation-for="Library.DistrictId" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="LibraryId" class="control-label"></label>
+				<select asp-for="LibraryId" class="form-control" asp-items="ViewBag.LibraryId">
+				</select>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Kaydet" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div>
+	<a asp-action="Index">Listeye Geri Dön</a>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

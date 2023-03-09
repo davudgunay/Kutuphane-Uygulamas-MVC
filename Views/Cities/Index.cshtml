@@ -1,0 +1,41 @@
+﻿@model IEnumerable<LibraryMVC.Models.City>
+
+@{
+    ViewData["Title"] = "İçerik";
+}
+
+<h1>İçerik</h1>
+
+<p>
+    <a asp-action="Create">Yeni Kayıt</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PlateCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.PlateCode.ToString("D2")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PlateCode">Güncelle</a> |
+                <a asp-action="Details" asp-route-id="@item.PlateCode">Detaylar</a> |
+                <a asp-action="Delete" asp-route-id="@item.PlateCode">Sil</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

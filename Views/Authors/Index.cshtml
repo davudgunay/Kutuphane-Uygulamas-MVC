@@ -1,0 +1,76 @@
+﻿@model IEnumerable<LibraryMVC.Models.Author>
+
+@{
+	string bilinmiyor = "Bilinmiyor", erkek = "Erkek", kadın = "Kadın";
+	ViewData["Title"] = "İçerik";
+}
+
+<h1>İçerik</h1>
+
+<p>
+	<a asp-action="Create">Yeni Kayıt</a>
+</p>
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Name)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.BirthDate)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.DeathDate)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Gender)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Name)
+				</td>
+				<td>
+					@if (item.BirthDate != null)
+					{
+						@item.BirthDate.Value.ToShortDateString()
+					}
+					else
+					{
+						@bilinmiyor
+					}
+				</td>
+				<td>
+					@if (item.DeathDate != null)
+					{
+						@item.DeathDate.Value.ToShortDateString()
+					}
+					else
+					{
+						@bilinmiyor
+					}
+				</td>
+				<td>
+					@if (item.Gender == true)
+					{
+						@erkek
+					}
+					else
+					{
+						@kadın
+					}
+				</td>
+				<td>
+					<a asp-action="Edit" asp-route-id="@item.Id">Güncelle</a> |
+					<a asp-action="Details" asp-route-id="@item.Id">Detaylar</a> |
+					<a asp-action="Delete" asp-route-id="@item.Id">Sil</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

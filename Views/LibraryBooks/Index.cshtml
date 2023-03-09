@@ -1,0 +1,61 @@
+﻿@model IEnumerable<LibraryMVC.Models.LibraryBook>
+
+@{
+	ViewData["Title"] = "İçerik";
+}
+
+<h1>İçerik</h1>
+
+<p>
+	<a asp-action="Create">Yeni Kayıt</a>
+</p>
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Cabinet)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Shelf)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Amount)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Library)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Book)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Cabinet)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Shelf)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Amount)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Library.Name)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Book.ISBN) -
+					@Html.DisplayFor(modelItem => item.Book.Title)
+				</td>
+				<td>
+					@Html.ActionLink("Güncelle", "Edit", new { /* id=item.PrimaryKey */ }) |
+					@Html.ActionLink("Detaylar", "Details", new { /* id=item.PrimaryKey */ }) |
+					@Html.ActionLink("Sil", "Delete", new { /* id=item.PrimaryKey */ })
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

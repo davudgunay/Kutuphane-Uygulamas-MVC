@@ -1,0 +1,70 @@
+﻿@model LibraryMVC.Models.Library
+
+@{
+	ViewData["Title"] = "Yeni Kayıt";
+}
+
+<script>
+
+	function GetDistricts(cityID) {
+		$("#DistrictId").load("@Url.Action("CityDistricts","Districts")?cityId=" + cityID.toString())
+	}
+
+</script>
+
+<h1>Yeni Kayıt</h1>
+
+<h4>Kütüphaneler</h4>
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="Name" class="control-label"></label>
+				<input asp-for="Name" class="form-control" />
+				<span asp-validation-for="Name" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="BookCount" class="control-label"></label>
+				<input asp-for="BookCount" class="form-control" />
+				<span asp-validation-for="BookCount" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Capacity" class="control-label"></label>
+				<input asp-for="Capacity" class="form-control" />
+				<span asp-validation-for="Capacity" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="EstablishmentDate" class="control-label"></label>
+				<input asp-for="EstablishmentDate" type="date" class="form-control" />
+				<span asp-validation-for="EstablishmentDate" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="District.CityId" class="control-label"></label>
+				<select asp-for="District.CityId" class="form-control" asp-items="ViewBag.CityId" onchange="GetDistricts(this.value)">
+					<option selected disabled >Şehir Seçiniz</option>
+				</select>
+				<span asp-validation-for="District.CityId" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="DistrictId" class="control-label"></label>
+				<select asp-for="DistrictId" class="form-control"></select>
+				<span asp-validation-for="DistrictId" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Kaydet" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div>
+	<a asp-action="Index">Listeye Geri Dön</a>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}
